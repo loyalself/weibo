@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b6eb314-d36f-4251-99a8-05424d215df4" name="Default Changelist" comment="" />
+    <list default="true" id="6b6eb314-d36f-4251-99a8-05424d215df4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -109,6 +116,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/layouts" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="Settings.Markdown" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -144,7 +152,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574390881981</updated>
-      <workItem from="1574390883174" duration="6290000" />
+      <workItem from="1574390883174" duration="7331000" />
+      <workItem from="1574408165462" duration="412000" />
     </task>
     <servers />
   </component>
@@ -156,7 +165,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
