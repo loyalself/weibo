@@ -107,11 +107,12 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/static_pages" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/layouts" />
     <property name="nodejs_package_manager_path" value="yarn" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\laravel-code\weibo\resources\views\layouts" />
       <recent name="E:\laravel-code\weibo\resources\views\static_pages" />
     </key>
   </component>
@@ -143,7 +144,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574390881981</updated>
-      <workItem from="1574390883174" duration="4795000" />
+      <workItem from="1574390883174" duration="5182000" />
     </task>
     <servers />
   </component>
