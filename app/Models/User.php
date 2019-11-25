@@ -17,7 +17,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     * 允许被修改的字段
+     *
      * @var array
      */
     protected $fillable = [
@@ -41,4 +41,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * 生成用户头像方法
+     * @param string $size
+     * @return string
+     */
+    public function gravatar($size = '100')
+    {
+        /**
+         * 通过 $this->attributes['email'] 获取到用户的邮箱
+         * 将小写的邮箱使用 md5 方法进行转码；
+         * 将转码后的邮箱与链接、尺寸拼接成完整的 URL 并返回；
+         */
+        $hash = md5(strtolower(trim($this->attributes['email'])));
+        return "http://www.gravatar.com/avatar/$hash?s=$size";
+    }
 }
