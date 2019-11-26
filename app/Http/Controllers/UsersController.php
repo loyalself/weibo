@@ -7,16 +7,30 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    /**
+     * 用户注册页面
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('users.create');
     }
 
+    /**
+     * 用户信息展示页面
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(User $user)
     {
         return view('users.show', compact('user'));
     }
-
+    /**
+     * 用户注册逻辑
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -42,5 +56,33 @@ class UsersController extends Controller
          */
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
         return redirect()->route('users.show', [$user]);
+    }
+    /**
+     * 用户编辑页面
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(User $user)
+    {
+        return view('users.edit', compact('user'));
+    }
+    /**
+     * 用户编辑逻辑
+     */
+    public function update(User $user, Request $request)
+    {
+        $this->validate($request, [
+            'name'      => 'required|max:50',
+            'password'  => 'nullable|confirmed|min:6'   //有的人不想修改密码,密码允许为空
+        ]);
+        $data = [];
+        $data['name'] = $request->name;
+        if($request->password)
+        {
+            $data['password'] = bcrypt($request->password);
+        }
+        $user->update($data);
+        session()->flash('success', '个人资料更新成功！');
+        return redirect()->route('users.show', $user);
     }
 }
