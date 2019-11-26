@@ -43,6 +43,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * 该方法将当前用户发布过的所有微博从数据库中取出
+     */
+    public function feed()
+    {
+        return $this->statuses()->orderBy('created_at', 'desc');
+    }
+
+
+    /**
      * 一个用户拥有多条微博
      */
     public function statuses()
