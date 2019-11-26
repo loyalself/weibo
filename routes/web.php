@@ -12,6 +12,11 @@ Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('signup', 'UsersController@create')->name('signup');
 Route::get('signup/confirm/{token}','UsersController@confirmEmail')->name('confirm_email'); //激活邮箱
 
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request'); //显示重置密码的邮箱发送页面
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');   //邮箱发送重设链接
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');  //密码更新页面
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');                //执行密码更新操作
+
 /**
  *  resource 方法将遵从 RESTful 架构为用户资源生成路由。该方法接收两个参数，第一个参数 为资源名称，第二个参数为控制器名称
  */
