@@ -32,6 +32,11 @@ class UsersController extends Controller
                 'password'  => bcrypt($request->password)
             ]);
         /**
+         * 用户注册后自动登录
+         */
+        Auth::login($user);
+
+        /**
          * 由于 HTTP 协议是无状态的，所以 Laravel 提供了一种用于临时保存用户数据的方法 - （Session），
            并附带支持多种会话后端驱动，可通过统一的 API 进行使用
          */
