@@ -11,6 +11,12 @@ class SessionsController extends Controller
         return view('sessions.create');
     }
 
+    /**
+     * 登录
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         $credentials = $this->validate($request, [
@@ -27,5 +33,16 @@ class SessionsController extends Controller
         } else {
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
             return redirect()->back()->withInput(); }
+    }
+
+    /**
+     * 退出
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroy()
+    {
+        Auth::logout();
+        session()->flash('success', '您已成功退出！');
+        return redirect('login');
     }
 }
