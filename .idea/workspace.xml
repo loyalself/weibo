@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6b6eb314-d36f-4251-99a8-05424d215df4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/sessions/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/sessions/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -119,6 +117,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\laravel-code\weibo\resources\views" />
       <recent name="E:\laravel-code\weibo\resources\views\users" />
       <recent name="E:\laravel-code\weibo\resources\views\layouts" />
       <recent name="E:\laravel-code\weibo\resources\views\static_pages" />
