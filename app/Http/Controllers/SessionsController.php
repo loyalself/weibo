@@ -24,15 +24,17 @@ class SessionsController extends Controller
             'password' => 'required'
         ]);
         /**
-         *  Laravel 提供的 Auth::user() 方法来获取 当前登录用户 的信息
+         *  Laravel 提供的 Auth::user() 方法来获取当前登录用户的信息
+         *  Auth::attempt() 方法可接收两个参数，第一个参数为需要进行用户身份认证的数 组，第二个参数为是否为用户开启『记住我』功能的布尔值。
          */
-        if (Auth::attempt($credentials))
+        if (Auth::attempt($credentials,$request->has('remember')))
         {
             session()->flash('success', '欢迎回来！');
             return redirect()->route('users.show', [Auth::user()]);
         } else {
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
-            return redirect()->back()->withInput(); }
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
