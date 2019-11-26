@@ -13,10 +13,20 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store'] ]); //除了用户展示、注册不需要用户登录其它的都要经过中间件检测
+            'except' => ['show', 'create', 'store','index'] ]); //除了用户展示、列表、注册不需要用户登录其它的都要经过中间件检测
 
         $this->middleware('guest', [
             'only' => ['create'] ]);
+    }
+
+    /**
+     * 用户列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        $users = User::paginate(10);
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -98,5 +108,19 @@ class UsersController extends Controller
         $user->update($data);
         session()->flash('success', '个人资料更新成功！');
         return redirect()->route('users.show', $user);
+    }
+
+    /**
+     * 管理员删除普通用户操作
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy(User $user)
+    {
+        $this->authorize('destroy', $user);
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back();
     }
 }
