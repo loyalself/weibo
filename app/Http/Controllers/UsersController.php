@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use Mail;
 class UsersController extends Controller
 {
     /**
@@ -13,7 +14,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store','index'] ]); //除了用户展示、列表、注册不需要用户登录其它的都要经过中间件检测
+            'except' => ['show', 'create', 'store','index','confirmEmail'] ]); //除了用户展示、列表、注册不需要用户登录其它的都要经过中间件检测
 
         $this->middleware('guest', [
             'only' => ['create'] ]);
@@ -70,14 +71,20 @@ class UsersController extends Controller
         /**
          * 用户注册后自动登录
          */
-        Auth::login($user);
-
+        //Auth::login($user);
         /**
          * 由于 HTTP 协议是无状态的，所以 Laravel 提供了一种用于临时保存用户数据的方法 - （Session），
            并附带支持多种会话后端驱动，可通过统一的 API 进行使用
          */
-        session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
-        return redirect()->route('users.show', [$user]);
+        //session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
+        //return redirect()->route('users.show', [$user]);
+
+        /**
+         * 9.2章改用户注册后要进行邮箱验证
+         */
+        $this->sendEmailConfirmationTo($user);
+        session()->flash('success', '验证邮件已发送到你的注册邮箱上，请注意查收。');
+        return redirect('/');
     }
     /**
      * 用户编辑页面
@@ -122,5 +129,38 @@ class UsersController extends Controller
         $user->delete();
         session()->flash('success', '成功删除用户！');
         return back();
+    }
+
+    /**
+     * 用户验证邮箱
+     * @param $token
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function confirmEmail($token)
+    {
+        $user = User::where('activation_token', $token)->firstOrFail();
+        $user->activated = true;
+        $user->activation_token = null;
+        $user->save();
+        Auth::login($user);
+        session()->flash('success', '恭喜你，激活成功！');
+        return redirect()->route('users.show', [$user]);
+    }
+    /**
+     * 发送邮件给指定用户
+     * @param $user
+     */
+    protected function sendEmailConfirmationTo($user)
+    {
+        $view = 'emails.confirm';           //发送邮件的视图
+        $data = compact('user');   //发送的数据
+        $from = 'summer@example.com';       //发送者邮箱
+        $name = 'Summer';                   //发送者名称
+        $to = $user->email;                 //发给谁
+        $subject = "感谢注册 Weibo 应用！请确认你的邮箱。";
+
+        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
+            $message->from($from, $name)->to($to)->subject($subject);
+        });
     }
 }
