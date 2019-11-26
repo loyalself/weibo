@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Auth;
 class UsersController extends Controller
 {
+    /**
+     * 我们提倡在控制器 Auth 中间件使用中，首选except 方法，这样的话，当你新增一个控制器方法时，默认是安全的，此为最佳实践
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store'] ]); //除了用户展示、注册不需要用户登录其它的都要经过中间件检测
+
+        $this->middleware('guest', [
+            'only' => ['create'] ]);
+    }
+
     /**
      * 用户注册页面
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -64,6 +76,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
     /**
@@ -71,6 +84,7 @@ class UsersController extends Controller
      */
     public function update(User $user, Request $request)
     {
+        $this->authorize('update', $user);
         $this->validate($request, [
             'name'      => 'required|max:50',
             'password'  => 'nullable|confirmed|min:6'   //有的人不想修改密码,密码允许为空
