@@ -20,6 +20,17 @@ class UserPolicy
     }
 
     /**
+     * 自己不能关注自己
+     * @param User $currentUser
+     * @param User $user
+     * @return bool
+     */
+    public function follow(User $currentUser, User $user)
+    {
+        return $currentUser->id !== $user->id;
+    }
+
+    /**
      * @param User $currentUser  当前登录用户实例
      * @param User $user         要进行授权的用户实例
      *
