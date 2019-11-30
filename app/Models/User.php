@@ -55,7 +55,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Status::class);
     }
-
+    /**
+     * 关注用户
+     * @param $user_ids
+     */
     public function follow($user_ids)
     {
         if ( ! is_array($user_ids))
@@ -64,7 +67,10 @@ class User extends Authenticatable
         }
         $this->followings()->sync($user_ids, false);
     }
-
+    /**
+     * 取消关注
+     * @param $user_ids
+     */
     public function unfollow($user_ids)
     {
         if(!is_array($user_ids))
@@ -83,7 +89,6 @@ class User extends Authenticatable
     {
         return $this->followings->contains($user_id);
     }
-
     /**
      * 多对多
      * 一个用户可以拥有多个粉丝。
