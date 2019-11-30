@@ -42,11 +42,32 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     /**
-     * 该方法将当前用户发布过的所有微博从数据库中取出
+     * 第一版:该方法将当前用户发布过的所有微博从数据库中取出
+     * 第二版改进:
+     * 1. 通过 followings 方法取出所有关注用户的信息，再借助 pluck 方法将 id 进行分离并 赋值给 user_ids ；
+     * 2. 将当前用户的 id 加入到 user_ids 数组中；
+     * 3. 使用 Laravel 提供的 查询构造器 whereIn 方法取出所有用户的微博动态并进行倒序排序；
+     * 4. 我们使用了 Eloquent 关联的预加载 with 方法，预加载避免了 N+1 查找的问题 ，大大提高了查询效率。
+     *     N+1 问题 的例子可以阅读此文档Eloquent模型关系预加载。
+     *
+     * 这里需要注意的是 Auth::user()->followings 的用法。我们在 User 模型里定义了关联方法followings(),
+     * 关联关系定义好后，我们就可以通过访问 followings 属性直接获取到关注用户的 集合。
+     * 这是 Laravel Eloquent 提供的「动态属性」属性功能，我们可以像在访问模型中定义的属性一 样，来访问所有的关联方法。
+     *
+     * 还有一点需要注意的是 $user->followings 与 $user->followings()调用时返回的数据是不一 样的,
+     * $user->followings 返回的是Eloquent集合;而$user->followings()返回的是数据库请求构造器.
+     * followings()的情况下，你需要使用:$user->followings()->get()或$user->followings()->paginate()。
+     * 方法才能获取到最终数据。可以简单理解为 followings 返回的是数据集合，而 followings()返回的是数据库查询语句。
+     *  如果使用 get() 方法的话：
+        $user->followings == $user->followings()->get() // 等于 true
      */
     public function feed()
     {
-        return $this->statuses()->orderBy('created_at', 'desc');
+        //第一版:return $this->statuses()->orderBy('created_at', 'desc');
+
+        $user_ids = $this->followings->pluck('id')->toArray();
+        array_push($user_ids, $this->id);
+        return Status::whereIn('user_id', $user_ids) ->with('user') ->orderBy('created_at', 'desc');
     }
     /**
      * 一个用户拥有多条微博
